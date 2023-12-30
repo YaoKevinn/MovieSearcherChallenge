@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(Color.theme.primaryBlack)
         let stackView = UIStackView(arrangedSubviews: [headerView, tableView, paginatorView])
         stackView.axis = .vertical
         
@@ -48,6 +48,8 @@ class HomeViewController: UIViewController {
             paginatorView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -UIScreen.bottomSafeArea)
         ])
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "HomeMovieCardTableViewCell")
+        tableView.backgroundColor = UIColor(Color.theme.primaryBlack)
+        tableView.separatorColor = .clear
     }
 
 
@@ -56,8 +58,11 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeMovieCardTableViewCell", for: indexPath)
+        cell.backgroundColor = UIColor(Color.theme.primaryBlack)
+        cell.selectionStyle = .none
          cell.contentConfiguration = UIHostingConfiguration {
              Text("This is an table cell")
+                 .foregroundColor(Color.theme.primaryWhite)
          }
          return cell
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let nav = UINavigationController(rootViewController: HomeViewController())
+        nav.navigationBar.tintColor = UIColor(Color.theme.primaryWhite)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
