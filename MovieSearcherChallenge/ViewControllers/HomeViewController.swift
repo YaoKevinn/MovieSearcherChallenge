@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var headerView: UIView = {
-        let vc = UIHostingController(rootView: VStack { Text("Header") }.frame(maxWidth: .infinity, alignment: .leading).padding(20).background(Color.theme.accent) )
+        let vc = UIHostingController(rootView: HeaderView())
         return vc.view
     }()
     
@@ -52,7 +52,15 @@ class HomeViewController: UIViewController {
         tableView.separatorColor = .clear
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {

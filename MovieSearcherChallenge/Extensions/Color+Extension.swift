@@ -23,4 +23,7 @@ struct CustomColorTheme {
     
     /// #111111
     let primaryBlack = Color("primaryBlack")
+    
+    /// #2B2B2B
+    let primaryGray = Color("primaryGray")
 }
