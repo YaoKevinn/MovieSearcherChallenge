@@ -26,4 +26,7 @@ struct CustomColorTheme {
     
     /// #2B2B2B
     let primaryGray = Color("primaryGray")
+    
+    /// #888888
+    let secondaryGray = Color("secondaryGray")
 }

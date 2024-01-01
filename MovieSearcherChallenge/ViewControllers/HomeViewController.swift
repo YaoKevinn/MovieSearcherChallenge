@@ -69,8 +69,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor(Color.theme.primaryBlack)
         cell.selectionStyle = .none
          cell.contentConfiguration = UIHostingConfiguration {
-             Text("This is an table cell")
-                 .foregroundColor(Color.theme.primaryWhite)
+             MovieCardView()
          }
          return cell
     }
