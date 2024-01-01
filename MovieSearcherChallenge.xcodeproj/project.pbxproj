@@ -19,6 +19,7 @@
 		28A2636B2B4319FC0036CE6C /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2636A2B4319FC0036CE6C /* Image+Extension.swift */; };
 		28A2636D2B431F2A0036CE6C /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2636C2B431F2A0036CE6C /* View+Extension.swift */; };
 		28A263702B4320C40036CE6C /* MovieCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2636F2B4320C40036CE6C /* MovieCardView.swift */; };
+		28A263732B432BD40036CE6C /* PaginatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A263722B432BD40036CE6C /* PaginatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		28A2636A2B4319FC0036CE6C /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
 		28A2636C2B431F2A0036CE6C /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		28A2636F2B4320C40036CE6C /* MovieCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCardView.swift; sourceTree = "<group>"; };
+		28A263722B432BD40036CE6C /* PaginatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		28A263602B4050E60036CE6C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				28A263712B432BC50036CE6C /* Paginator */,
 				28A2636E2B4320B00036CE6C /* MovieCard */,
 				28A263672B4317540036CE6C /* HeaderView */,
 			);
@@ -131,6 +134,14 @@
 				28A2636F2B4320C40036CE6C /* MovieCardView.swift */,
 			);
 			path = MovieCard;
+			sourceTree = "<group>";
+		};
+		28A263712B432BC50036CE6C /* Paginator */ = {
+			isa = PBXGroup;
+			children = (
+				28A263722B432BD40036CE6C /* PaginatorView.swift */,
+			);
+			path = Paginator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +221,7 @@
 				28A2636B2B4319FC0036CE6C /* Image+Extension.swift in Sources */,
 				28A263412B4045010036CE6C /* SceneDelegate.swift in Sources */,
 				28A263492B4045010036CE6C /* MovieSearcherChallenge.xcdatamodeld in Sources */,
+				28A263732B432BD40036CE6C /* PaginatorView.swift in Sources */,
 				28A263662B40543D0036CE6C /* UIScreen+Extension.swift in Sources */,
 				28A2636D2B431F2A0036CE6C /* View+Extension.swift in Sources */,
 				28A263692B43177D0036CE6C /* HeaderView.swift in Sources */,
