@@ -65,7 +65,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor(Color.theme.primaryBlack)
             cell.selectionStyle = .none
              cell.contentConfiguration = UIHostingConfiguration {
-                 MovieCardView()
+                 MovieCardView(onTapCard: {
+                     let vc = UIHostingController(rootView: MovieDetailView())
+                     self.navigationController?.pushViewController(vc, animated: true)
+                 })
              }
             return cell
         } else {

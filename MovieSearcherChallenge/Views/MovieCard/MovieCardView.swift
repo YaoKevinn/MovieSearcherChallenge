@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieCardView: View {
     
     @State private var isFavorite: Bool = false
+    var onTapCard: (() -> Void)? = nil
     
     var body: some View {
         HStack(spacing: 15) {
@@ -35,8 +36,9 @@ struct MovieCardView: View {
                         isFavorite = !isFavorite
                     }, label: {
                         Image(isFavorite ? "heart_full_accent" : "heart_white")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                            .resizeImage(width: 28, height: 28)
                     })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     .offset(x: -14, y: 14)
                 )
             
@@ -65,6 +67,9 @@ struct MovieCardView: View {
         }
         .background(Color.theme.primaryBlack)
         .frame(height: 273)
+        .onTapGesture {
+            onTapCard?()
+        }
         .padding(.bottom, 20)
     }
 }
