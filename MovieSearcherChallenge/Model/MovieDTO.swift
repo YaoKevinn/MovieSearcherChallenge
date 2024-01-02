@@ -8,9 +8,9 @@
 import Foundation
 
 struct MovieDTO: Codable {
-    let id: String
+    let id: Int
     let overview: String
-    let posterPath: String
+    var posterPath: String? = nil
     let releaseDate: String
     let title: String
     
@@ -23,3 +23,16 @@ struct MovieDTO: Codable {
     }
 }
 
+struct MovieResponse: Codable {
+    let page: Int
+    let results: [MovieDTO]
+    let totalPages: Int
+    let totalResults: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
+}

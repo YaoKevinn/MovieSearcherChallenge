@@ -10,6 +10,8 @@ import SwiftUI
 struct HeaderView: View {
     
     @State private var searchText: String = ""
+    @State private var searched: Bool = false
+    var onSubmit: ((String) -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 20) {
@@ -44,6 +46,15 @@ struct HeaderView: View {
                             .foregroundColor(Color.theme.primaryWhite.opacity(0.2))
                     }
                     .font(.headline)
+                    .onTapGesture {
+                        searched = false
+                    }
+                    .onSubmit {
+                        if !searchText.isEmpty {
+                            searched = true
+                            onSubmit?(searchText)
+                        }
+                    }
                     .foregroundColor(Color.theme.primaryWhite)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -55,14 +66,14 @@ struct HeaderView: View {
                     
             )
             
-            Text("Search results for \"Example\"")
+            Text(searched ? "Search results for \"\(searchText)\"" : "")
                 .font(.headline)
                 .foregroundColor(Color.theme.primaryWhite)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom, 20)
             
         }
         .padding(.horizontal, 16)
-        .padding(.bottom, 20)
         .background(Color.theme.primaryBlack)
     }
 }

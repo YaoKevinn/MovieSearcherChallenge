@@ -8,34 +8,48 @@
 import SwiftUI
 
 struct PaginatorView: View {
-    
-    @Binding var isPreviousAvailable: Bool
-    @Binding var isNextAvailable: Bool
+
+    var currentPage: Int
+    var totalPage: Int
+    var previousPageAction: (() -> Void)? = nil
+    var nextPageAction: (() -> Void)? = nil
     
     var body: some View {
         HStack(spacing: 16) {
-            Text("< Previous")
-                .font(.callout)
-                .fontWeight(.medium)
-                .padding(.vertical, 16)
-                .foregroundColor(isPreviousAvailable ? Color.theme.accent : Color.theme.secondaryGray)
-                .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.theme.primaryGray)
-                )
+            Button {
+                previousPageAction?()
+            } label: {
+                Text("< Previous")
+                    .font(.callout)
+                    .fontWeight(.medium)
+                    .padding(.vertical, 16)
+                    .foregroundColor(currentPage > 1 ? Color.theme.accent : Color.theme.secondaryGray)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.theme.primaryGray)
+                    )
+            }
             
-            Text("Next >")
+            Text("\(currentPage)")
                 .font(.callout)
                 .fontWeight(.medium)
-                .foregroundColor(isNextAvailable ? Color.theme.accent : Color.theme.secondaryGray)
-                .padding(.vertical, 16)
-                .frame(maxWidth: .infinity)
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.theme.primaryGray)
-                )
-                
+                .foregroundColor(Color.theme.primaryWhite)
+            
+            Button {
+                nextPageAction?()
+            } label: {
+                Text("Next >")
+                    .font(.callout)
+                    .fontWeight(.medium)
+                    .foregroundColor(currentPage < totalPage ? Color.theme.accent : Color.theme.secondaryGray)
+                    .padding(.vertical, 16)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.theme.primaryGray)
+                    )
+            }
         }
         .background(Color.theme.primaryBlack)
     }
@@ -43,7 +57,7 @@ struct PaginatorView: View {
 
 struct PaginatorView_Previews: PreviewProvider {
     static var previews: some View {
-        PaginatorView(isPreviousAvailable: .constant(false), isNextAvailable: .constant(true))
+        PaginatorView(currentPage: 1, totalPage: 10)
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

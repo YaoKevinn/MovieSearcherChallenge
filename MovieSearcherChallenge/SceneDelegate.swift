@@ -16,7 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let nav = UINavigationController(rootViewController: HomeViewController())
+        let vc = HomeViewController()
+        vc.repository = RemoteMovieRepository()
+        let nav = UINavigationController(rootViewController: vc)
         nav.navigationBar.tintColor = UIColor(Color.theme.primaryWhite)
         window?.rootViewController = nav
         window?.makeKeyAndVisible()

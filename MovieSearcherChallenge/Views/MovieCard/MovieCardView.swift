@@ -6,56 +6,70 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MovieCardView: View {
     
+    let movie: Movie
     @State private var isFavorite: Bool = false
     var onTapCard: (() -> Void)? = nil
     
     var body: some View {
         HStack(spacing: 15) {
-            AsyncImage(
-                url: URL(string: "https://kraftystickersapparel.com.au/cdn/shop/files/spiderman_across_the_spiderverse.jpg?v=1694397362")) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 182, height: 273)
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 182, height: 273)
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.theme.primaryGray)
-                        )
-                }
-                .cornerRadius(15)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .overlay(
-                    Button(action: {
-                        // TODO: Favorite button action
-                        isFavorite = !isFavorite
-                    }, label: {
-                        Image(isFavorite ? "heart_full_accent" : "heart_white")
-                            .resizeImage(width: 28, height: 28)
-                    })
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    .offset(x: -14, y: 14)
-                )
+            if let imageUrl = movie.posterPath {
+                WebImage(url: URL(string: imageUrl))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 182, height: 273)
+                    .cornerRadius(15)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .overlay(
+                        Button(action: {
+                            // TODO: Favorite button action
+                            isFavorite = !isFavorite
+                        }, label: {
+                            Image(isFavorite ? "heart_full_accent" : "heart_white")
+                                .resizeImage(width: 28, height: 28)
+                        })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .offset(x: -14, y: 14)
+                    )
+            } else {
+                Image("image_unavailable")
+                    .frame(width: 182, height: 273)
+                    .cornerRadius(15)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.theme.primaryGray)
+                    )
+                    .overlay(
+                        Button(action: {
+                            // TODO: Favorite button action
+                            isFavorite = !isFavorite
+                        }, label: {
+                            Image(isFavorite ? "heart_full_accent" : "heart_white")
+                                .resizeImage(width: 28, height: 28)
+                        })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .offset(x: -14, y: 14)
+                    )
+            }
             
             VStack(spacing: 10) {
-                Text("Spider-Man: Across the Spider-Verse")
+                Text(movie.title ?? "-")
                     .font(.headline)
                     .fontWeight(.heavy)
                     .lineSpacing(8)
                     .foregroundColor(Color.theme.primaryWhite)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("Jun 01, 2023")
+                Text(movie.releaseDate ?? "-")
                     .font(.callout)
                     .foregroundColor(Color.theme.primaryWhite)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse’s very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.")
+                Text(movie.overview ?? "-")
                     .font(.caption)
                     .lineLimit(5)
                     .lineSpacing(4)
@@ -76,7 +90,7 @@ struct MovieCardView: View {
 
 struct MovieCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieCardView()
+        MovieCardView(movie: .init(context: .init(concurrencyType: .mainQueueConcurrencyType)))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

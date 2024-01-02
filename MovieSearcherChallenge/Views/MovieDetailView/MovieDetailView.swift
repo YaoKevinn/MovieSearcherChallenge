@@ -6,47 +6,52 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MovieDetailView: View {
     
-    
+    let movie: Movie
     
     var body: some View {
         ZStack {
             Color.theme.primaryBlack.ignoresSafeArea()
             
             VStack {
-                AsyncImage(url: URL(string:  "https://kraftystickersapparel.com.au/cdn/shop/files/spiderman_across_the_spiderverse.jpg?v=1694397362")) { image in
-                    image
+                if let imageUrl = movie.posterPath {
+                    WebImage(url: URL(string: imageUrl))
                         .resizable()
                         .scaledToFill()
                         .frame(width: UIScreen.width, height: UIScreen.height * 0.7)
-                } placeholder: {
-                    ProgressView()
+                        .overlay(
+                            Rectangle()
+                                .fill(LinearGradient(colors: [Color.theme.primaryBlack, .clear, .clear], startPoint: .bottom, endPoint: .top))
+                        )
+                } else {
+                    Image("image_unavailable")
                         .frame(width: UIScreen.width, height: UIScreen.height * 0.7)
+                        .overlay(
+                            Rectangle()
+                                .fill(LinearGradient(colors: [Color.theme.primaryBlack, .clear, .clear], startPoint: .bottom, endPoint: .top))
+                        )
                 }
-                .overlay(
-                    Rectangle()
-                        .fill(LinearGradient(colors: [Color.theme.primaryBlack, .clear, .clear], startPoint: .bottom, endPoint: .top))
-                )
 
                 Spacer()
             }
             .edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 10) {
-                Text("Spider-Man: Across the Spider-Verse")
+                Text(movie.title ?? "-")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
                     .lineSpacing(8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text("Jun 01, 2023")
+                Text(movie.releaseDate ?? "-")
                     .font(.callout)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 ScrollView {
-                    Text("After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse’s very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.")
+                    Text(movie.overview ?? "-")
                         .font(.body)
                         .lineSpacing(4)
                         .foregroundColor(Color.theme.secondaryGray)
@@ -85,6 +90,6 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView()
+        MovieDetailView(movie: Movie(context: .init(concurrencyType: .mainQueueConcurrencyType)))
     }
 }

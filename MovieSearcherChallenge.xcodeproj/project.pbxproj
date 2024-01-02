@@ -24,6 +24,8 @@
 		28A2638D2B43F6600036CE6C /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2638C2B43F6600036CE6C /* MovieDTO.swift */; };
 		28A263982B43F8830036CE6C /* Movie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A263962B43F8830036CE6C /* Movie+CoreDataClass.swift */; };
 		28A263992B43F8830036CE6C /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A263972B43F8830036CE6C /* Movie+CoreDataProperties.swift */; };
+		28A2639C2B43F9E30036CE6C /* MovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2639B2B43F9E30036CE6C /* MovieRepository.swift */; };
+		28A263A22B440E5C0036CE6C /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 28A263A12B440E5C0036CE6C /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,7 @@
 		28A2638C2B43F6600036CE6C /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		28A263962B43F8830036CE6C /* Movie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		28A263972B43F8830036CE6C /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		28A2639B2B43F9E30036CE6C /* MovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28A263A22B440E5C0036CE6C /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +119,7 @@
 		28A263612B4051020036CE6C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				28A2639B2B43F9E30036CE6C /* MovieRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -188,6 +193,9 @@
 			dependencies = (
 			);
 			name = MovieSearcherChallenge;
+			packageProductDependencies = (
+				28A263A12B440E5C0036CE6C /* SDWebImageSwiftUI */,
+			);
 			productName = MovieSearcherChallenge;
 			productReference = 28A2633B2B4045010036CE6C /* MovieSearcherChallenge.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +224,9 @@
 				Base,
 			);
 			mainGroup = 28A263322B4045010036CE6C;
+			packageReferences = (
+				28A263A02B440E5C0036CE6C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 28A2633C2B4045010036CE6C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -242,6 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28A2639C2B43F9E30036CE6C /* MovieRepository.swift in Sources */,
 				28A263982B43F8830036CE6C /* Movie+CoreDataClass.swift in Sources */,
 				28A263992B43F8830036CE6C /* Movie+CoreDataProperties.swift in Sources */,
 				28A2638D2B43F6600036CE6C /* MovieDTO.swift in Sources */,
@@ -457,6 +469,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		28A263A02B440E5C0036CE6C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		28A263A12B440E5C0036CE6C /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 28A263A02B440E5C0036CE6C /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		28A263472B4045010036CE6C /* MovieSearcherChallenge.xcdatamodeld */ = {

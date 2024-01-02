@@ -25,6 +25,4 @@ extension Movie {
 
 }
 
-extension Movie : Identifiable {
-
-}
+extension Movie : Identifiable {}

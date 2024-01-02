@@ -10,6 +10,12 @@ import SwiftUI
 
 class HomeViewController: UIViewController {
     
+    var repository: MovieRepositoryProtocol? = nil
+    var movies: [Movie] = []
+    var currentPage: Int = 1
+    var totalPage: Int = 1
+    var searchText: String = ""
+    
     private lazy var tableView: UITableView = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,7 +25,10 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var headerView: UIView = {
-        let vc = UIHostingController(rootView: HeaderView())
+        let view = HeaderView { searchText in
+            self.getData(searchText: searchText)
+        }
+        let vc = UIHostingController(rootView: view)
         return vc.view
     }()
 
@@ -45,6 +54,9 @@ class HomeViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PaginatorViewCell")
         tableView.backgroundColor = UIColor(Color.theme.primaryBlack)
         tableView.separatorColor = .clear
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,17 +68,45 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func getData(searchText: String, page: Int = 1) {
+        let isDifferentSearchText: Bool = searchText != self.searchText
+        if isDifferentSearchText {
+            self.searchText = searchText
+        }
+        repository?.getMovies(
+            searchText: searchText,
+            page: isDifferentSearchText ? 1 : page,
+            completion: { [weak self] movies, currentPage, totalPage in
+                self?.movies = movies
+                self?.currentPage = currentPage
+                self?.totalPage = totalPage
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                    self?.tableView.scrollToRow(at: .init(row: 0, section: 0), at: .top, animated: true)
+                }
+                print("🔥 PASA POR ACA: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
+            },
+            errorHandler: { error in
+                print("🔥 PASA POR ACA: \(error)")
+            })
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row != 3 {
+        if indexPath.row != movies.count {
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "HomeMovieCardTableViewCell", for: indexPath)
             cell.backgroundColor = UIColor(Color.theme.primaryBlack)
             cell.selectionStyle = .none
              cell.contentConfiguration = UIHostingConfiguration {
-                 MovieCardView(onTapCard: {
-                     let vc = UIHostingController(rootView: MovieDetailView())
+                 MovieCardView(movie: self.movies[indexPath.row], onTapCard: {
+                     self.dismissKeyboard()
+                     let vc = UIHostingController(rootView: MovieDetailView(movie: self.movies[indexPath.row]))
                      self.navigationController?.pushViewController(vc, animated: true)
                  })
              }
@@ -76,14 +116,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor(Color.theme.primaryBlack)
             cell.selectionStyle = .none
              cell.contentConfiguration = UIHostingConfiguration {
-                 PaginatorView(isPreviousAvailable: .constant(false), isNextAvailable: .constant(true))
+                 PaginatorView(
+                    currentPage: currentPage,
+                    totalPage: totalPage,
+                    previousPageAction: {
+                        if self.currentPage != 1 {
+                            self.getData(searchText: self.searchText, page: self.currentPage - 1)
+                        }
+                    },
+                    nextPageAction: {
+                        if self.currentPage < self.totalPage {
+                            self.getData(searchText: self.searchText, page: self.currentPage + 1)
+                        }
+                    }
+                 )
              }
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 // count + 1
+        return movies.count + (movies.count == 0 ? 0 : 1) // count + 1
     }
 }
 
