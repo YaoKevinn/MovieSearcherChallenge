@@ -11,6 +11,9 @@ import SDWebImageSwiftUI
 struct MovieDetailView: View {
     
     let movie: MovieDTO
+    var toggleFavoriteAction: (() -> Void)? = nil
+    
+    @State private var isFavorite: Bool = false
     
     var body: some View {
         ZStack {
@@ -62,11 +65,11 @@ struct MovieDetailView: View {
                 Spacer()
                 
                 Button {
-                   
+                    toggleFavorite()
                 } label: {
                     HStack(spacing: 8) {
                         Image("heart_black")
-                        Text("Add to favorite")
+                        Text(isFavorite ? "Remove form favorite" : "Add to favorite")
                             .font(.title3)
                             .fontWeight(.bold)
                             .foregroundColor(Color.theme.primaryBlack)
@@ -85,6 +88,27 @@ struct MovieDetailView: View {
             .frame(maxWidth: UIScreen.width, maxHeight: .infinity, alignment: .bottom)
         }
         .foregroundColor(Color.theme.primaryWhite)
+        .onAppear {
+            if let favoriteIds = UserDefaults.standard.array(forKey: "favoritesMovieIds") as? [Int] {
+                isFavorite = favoriteIds.contains(movie.id)
+            }
+        }
+    }
+    
+    private func toggleFavorite() {
+        if let favIds = UserDefaults.standard.array(forKey: "favoritesMovieIds") as? [Int] {
+            var newFavIds = favIds
+            if newFavIds.contains(movie.id) {
+                newFavIds.removeAll(where: { $0 == movie.id })
+            } else {
+                newFavIds.append(movie.id)
+            }
+            UserDefaults.standard.set(newFavIds, forKey: "favoritesMovieIds")
+        } else {
+            UserDefaults.standard.set([movie.id], forKey: "favoritesMovieIds")
+        }
+       isFavorite.toggle()
+       toggleFavoriteAction?()
     }
 }
 

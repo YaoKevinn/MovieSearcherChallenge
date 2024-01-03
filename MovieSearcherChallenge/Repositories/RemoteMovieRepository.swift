@@ -18,6 +18,7 @@ enum NetworkError: Error {
 
 protocol MovieRepositoryProtocol {
     func getMovies(searchText: String, page: Int, completion: @escaping ([MovieDTO], Int, Int) -> Void, errorHandler: @escaping ((NetworkError) -> Void))
+    func getAllFavorites() -> [MovieDTO]
 }
 
 class RemoteMovieRepository: MovieRepositoryProtocol {
@@ -74,6 +75,10 @@ class RemoteMovieRepository: MovieRepositoryProtocol {
         } else {
             errorHandler(NetworkError.InvalidURL)
         }
+    }
+
+    func getAllFavorites() -> [MovieDTO] {
+        return coreDataManager.getAllFavorites()
     }
     
     private func downloadImages(for movies: [MovieDTO], completion: @escaping (Result<[MovieDTO], Error>) -> Void) {

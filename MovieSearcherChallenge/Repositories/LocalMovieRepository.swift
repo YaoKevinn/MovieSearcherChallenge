@@ -15,4 +15,8 @@ class LocalMovieRepository: MovieRepositoryProtocol {
         let moviesRes = coreDataManager.searchMoviesByPage(searchText: searchText, page: page)
         completion(moviesRes.0, moviesRes.1, moviesRes.2)
     }
+    
+    func getAllFavorites() -> [MovieDTO] {
+        return coreDataManager.getAllFavorites()
+    }
 }

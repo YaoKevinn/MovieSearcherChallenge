@@ -25,15 +25,11 @@ class OfflineHomeViewController: UIViewController {
     }()
     
     private lazy var headerView: UIView = {
-        let view = HeaderView(isOffline: true) { searchText in
+        let view = HeaderView(isOffline: true, onSubmit: { searchText in
             self.getData(searchText: searchText)
-        }
-        let vc = UIHostingController(rootView: view)
-        return vc.view
-    }()
-    
-    private lazy var offlineView: UIView = {
-        let view = OfflineView {}
+        }, onTapFavorite: {
+            self.goToFavoriteList()
+        })
         let vc = UIHostingController(rootView: view)
         return vc.view
     }()
@@ -111,8 +107,10 @@ class OfflineHomeViewController: UIViewController {
             })
     }
     
-    func goToOfflineMode() {
-        
+    func goToFavoriteList() {
+        let vc = FavoriteListViewController()
+        vc.repository = LocalMovieRepository()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func scrollToTop() {

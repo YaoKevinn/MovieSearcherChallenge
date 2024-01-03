@@ -26,15 +26,11 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var headerView: UIView = {
-        let view = HeaderView { searchText in
+        let view = HeaderView(onSubmit: { searchText in
             self.getData(searchText: searchText)
-        }
-        let vc = UIHostingController(rootView: view)
-        return vc.view
-    }()
-    
-    private lazy var offlineView: UIView = {
-        let view = OfflineView {}
+        }, onTapFavorite: {
+            self.goToFavoriteList()
+        })
         let vc = UIHostingController(rootView: view)
         return vc.view
     }()
@@ -132,6 +128,12 @@ class HomeViewController: UIViewController {
             })
     }
     
+    func goToFavoriteList() {
+        let vc = FavoriteListViewController()
+        vc.repository = LocalMovieRepository()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func goToOfflineMode() {
         let vc = OfflineHomeViewController()
         vc.repository = LocalMovieRepository()
@@ -179,7 +181,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                  cell.contentConfiguration = UIHostingConfiguration {
                      MovieCardView(movie: self.movies[indexPath.row], onTapCard: {
                          self.dismissKeyboard()
-                         let vc = UIHostingController(rootView: MovieDetailView(movie: self.movies[indexPath.row]))
+                         let target = self.movies[indexPath.row]
+                         let vc = UIHostingController(rootView: MovieDetailView(movie: target, toggleFavoriteAction: {
+                             DispatchQueue.main.async {
+                                 self.tableView.reloadData()
+                             }
+                         }))
                          self.navigationController?.pushViewController(vc, animated: true)
                      })
                  }

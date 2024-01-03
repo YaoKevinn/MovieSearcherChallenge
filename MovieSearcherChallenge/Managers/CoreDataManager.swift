@@ -10,22 +10,22 @@ import UIKit
 
 class CoreDataManager {
     private let mainContext: NSManagedObjectContext
-
+    
     init() {
         self.mainContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
-
+    
     func insertMoviesIfNeeded(movieDTOs: [MovieDTO]) {
         let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         privateContext.parent = mainContext
-
+        
         privateContext.perform {
             for movieDTO in movieDTOs {
                 if !self.checkIfMovieExists(id: movieDTO.id, context: privateContext) {
                     _ = self.insertMovie(movieDTO: movieDTO, context: privateContext)
                 }
             }
-
+            
             do {
                 try privateContext.save()
                 self.mainContext.perform {
@@ -44,7 +44,7 @@ class CoreDataManager {
     
     func getMovies() {
         do {
-            let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
+            let fetchRequest = Movie.fetchRequest()
             let data = try mainContext.fetch(fetchRequest)
             print("-------DATA FOR MOVIES-------")
             print("Total count: \(data.count)")
@@ -54,9 +54,27 @@ class CoreDataManager {
         }
     }
     
+    func getAllFavorites() -> [MovieDTO] {
+        if let favIds = UserDefaults.standard.array(forKey: "favoritesMovieIds") as? [Int] {
+            do {
+                let request = Movie.fetchRequest()
+                let movies = try mainContext.fetch(request)
+                let filteredMovies = movies.filter({ favIds.contains(Int($0.id)) })
+                let movieDTOs = filteredMovies.map({ MovieDTO(dataObject: $0) })
+                
+                return movieDTOs
+            } catch {
+                print("Error getting favorite movies from CoreData: \(error.localizedDescription)")
+                return ([])
+            }
+        } else {
+            return []
+        }
+    }
+    
     func searchMoviesByPage(searchText: String, page: Int, size: Int = 20) -> ([MovieDTO], Int, Int) {
         do {
-            let request = Movie.fetchRequest() as NSFetchRequest<Movie>
+            let request = Movie.fetchRequest()
             let pred = NSPredicate(format: "title CONTAINS[c] %@", searchText)
             request.predicate = pred
             let totalMoviesCount = try mainContext.count(for: request)
@@ -76,8 +94,8 @@ class CoreDataManager {
     }
     
     func deleteAllMovies() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
 
        do {
            let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
@@ -89,11 +107,11 @@ class CoreDataManager {
     }
 
     private func checkIfMovieExists(id: Int, context: NSManagedObjectContext) -> Bool {
-        let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %d", id)
+        let request: NSFetchRequest<Movie> = Movie.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %d", id)
 
         do {
-            let count = try context.count(for: fetchRequest)
+            let count = try context.count(for: request)
             return count > 0
         } catch {
             print("Error checking if movie exists: \(error.localizedDescription)")

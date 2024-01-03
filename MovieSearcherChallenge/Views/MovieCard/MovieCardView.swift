@@ -85,6 +85,11 @@ struct MovieCardView: View {
             onTapCard?()
         }
         .padding(.bottom, 20)
+        .onAppear {
+            if let favoriteIds = UserDefaults.standard.array(forKey: "favoritesMovieIds") as? [Int] {
+                isFavorite = favoriteIds.contains(movie.id)
+            }
+        }
     }
 }
 

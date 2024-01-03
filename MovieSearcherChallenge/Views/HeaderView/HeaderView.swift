@@ -13,6 +13,7 @@ struct HeaderView: View {
     @State private var searched: Bool = false
     var isOffline: Bool = false
     var onSubmit: ((String) -> Void)? = nil
+    var onTapFavorite: (() -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 20) {
@@ -44,7 +45,7 @@ struct HeaderView: View {
                 .padding(.trailing, 8)
                 
                 Button {
-                    
+                    onTapFavorite?()
                 } label: {
                     Image("favorite_list")
                         .resizeImage(width: 28, height: 28)

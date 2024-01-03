@@ -33,6 +33,7 @@
 		28CA7C2B2B456F90008CA04C /* ImageDownloadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA7C2A2B456F90008CA04C /* ImageDownloadHelper.swift */; };
 		28CA7C2E2B4581BB008CA04C /* OfflineHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA7C2D2B4581BB008CA04C /* OfflineHomeViewController.swift */; };
 		28CA7C302B45836A008CA04C /* LocalMovieRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA7C2F2B45836A008CA04C /* LocalMovieRepository.swift */; };
+		28CA7C322B45C4CA008CA04C /* FavoriteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CA7C312B45C4CA008CA04C /* FavoriteListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		28CA7C2A2B456F90008CA04C /* ImageDownloadHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadHelper.swift; sourceTree = "<group>"; };
 		28CA7C2D2B4581BB008CA04C /* OfflineHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineHomeViewController.swift; sourceTree = "<group>"; };
 		28CA7C2F2B45836A008CA04C /* LocalMovieRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMovieRepository.swift; sourceTree = "<group>"; };
+		28CA7C312B45C4CA008CA04C /* FavoriteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 			children = (
 				28A263422B4045010036CE6C /* HomeViewController.swift */,
 				28CA7C2D2B4581BB008CA04C /* OfflineHomeViewController.swift */,
+				28CA7C312B45C4CA008CA04C /* FavoriteListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				28A2636D2B431F2A0036CE6C /* View+Extension.swift in Sources */,
 				28A263692B43177D0036CE6C /* HeaderView.swift in Sources */,
 				28CA7C282B456F42008CA04C /* Movie+CoreDataProperties.swift in Sources */,
+				28CA7C322B45C4CA008CA04C /* FavoriteListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
