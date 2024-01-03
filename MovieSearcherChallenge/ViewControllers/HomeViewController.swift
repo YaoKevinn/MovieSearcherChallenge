@@ -95,27 +95,76 @@ class HomeViewController: UIViewController {
                 self?.currentPage = currentPage
                 self?.totalPage = totalPage
                 self?.hasInternetConnection = true
-                self?.scrollToTop()
+                
+                if !movies.isEmpty {
+                    self?.scrollToTop()
+                } else {
+                    self?.tableView.reloadData()
+                    self?.showAlert(
+                        title: "No result found",
+                        message: "Please try another movie title",
+                        okActionTitle: "Ok"
+                    )
+                }
+                
                 print("🔥 PASA POR ACA: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
             },
             errorHandler: { error in
                 if error == .Connectivity {
                     self.hasInternetConnection = false
                     self.scrollToTop()
+                    self.showAlert(
+                        title: "Oops! No internet detected",
+                        message: "Would you like to switch to offline mode?",
+                        okActionTitle: "Go to offline mode",
+                        cancelActionTitle: "Cancel",
+                        completion: { self.goToOfflineMode() }
+                    )
                 }
+                
+                self.showAlert(
+                    title: "Oops! Something went wrong",
+                    message: "Please try again later",
+                    okActionTitle: "Ok"
+                )
+                
                 print("🔥 PASA POR ACA: \(error)")
             })
     }
     
     func goToOfflineMode() {
         let vc = OfflineHomeViewController()
-//        vc.repository = 
+        vc.repository = LocalMovieRepository()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func scrollToTop() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.tableView.scrollToRow(at: .init(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
+    
+    private func showAlert(title: String, message: String, okActionTitle: String, cancelActionTitle: String? = nil, completion: (() -> Void)? = nil, cancelAction: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAlertAction = UIAlertAction(title: okActionTitle, style: .default) { _ in
+            alertController.dismiss(animated: true)
+            completion?()
+        }
+    
+        alertController.addAction(okAlertAction)
+        
+        if  let cancelActionTitle = cancelActionTitle {
+            let cancelAlertAction = UIAlertAction(title: cancelActionTitle, style: .default) { _ in
+                alertController.dismiss(animated: true)
+                cancelAction?()
+            }
+            alertController.addAction(cancelAlertAction)
+        }
+        
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }

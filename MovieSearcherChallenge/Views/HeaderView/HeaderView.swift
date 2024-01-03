@@ -11,12 +11,13 @@ struct HeaderView: View {
     
     @State private var searchText: String = ""
     @State private var searched: Bool = false
+    var isOffline: Bool = false
     var onSubmit: ((String) -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 20) {
             HStack(spacing: 0) {
-                Text("Explore Movie")
+                Text(isOffline ? "Offline mode" : "Explore Movie")
                     .font(.title)
                     .fontWeight(.black)
                     .foregroundColor(Color.theme.primaryWhite)
@@ -26,6 +27,7 @@ struct HeaderView: View {
                     .foregroundColor(Color.theme.accent)
                 
                 Spacer()
+                
                 
                 Button {
                     CoreDataManager().getMovies()

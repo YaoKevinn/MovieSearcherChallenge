@@ -25,7 +25,7 @@ class OfflineHomeViewController: UIViewController {
     }()
     
     private lazy var headerView: UIView = {
-        let view = HeaderView { searchText in
+        let view = HeaderView(isOffline: true) { searchText in
             self.getData(searchText: searchText)
         }
         let vc = UIHostingController(rootView: view)
@@ -91,13 +91,22 @@ class OfflineHomeViewController: UIViewController {
                 self?.movies = movies
                 self?.currentPage = currentPage
                 self?.totalPage = totalPage
-                self?.scrollToTop()
+                if !movies.isEmpty {
+                    self?.scrollToTop()
+                } else {
+                    self?.tableView.reloadData()
+                    self?.showAlert(
+                        title: "No result found",
+                        message: "Please try another movie title"
+                    )
+                }
                 print("🔥 PASA POR ACA Coredata: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
             },
             errorHandler: { error in
                 if error == .Connectivity {
                     self.scrollToTop()
                 }
+                self.showAlert(title: "Oops! There was an error", message: "Please contact us")
                 print("🔥 PASA POR ACA Coredata: \(error)")
             })
     }
@@ -111,6 +120,18 @@ class OfflineHomeViewController: UIViewController {
             self.tableView.reloadData()
             self.tableView.scrollToRow(at: .init(row: 0, section: 0), at: .top, animated: true)
         }
+    }
+    
+    private func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let okAlertAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            alertController.dismiss(animated: true)
+            completion?()
+        }
+    
+        alertController.addAction(okAlertAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

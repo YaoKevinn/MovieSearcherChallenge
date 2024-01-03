@@ -48,9 +48,30 @@ class CoreDataManager {
             let data = try mainContext.fetch(fetchRequest)
             print("-------DATA FOR MOVIES-------")
             print("Total count: \(data.count)")
-            print(data.map({ $0.image }))
+            print(data.map({ $0.title }))
         } catch {
-            print("Error checking if movie exists: \(error.localizedDescription)")
+            print("Error getting movies from CoreData: \(error.localizedDescription)")
+        }
+    }
+    
+    func searchMoviesByPage(searchText: String, page: Int, size: Int = 20) -> ([MovieDTO], Int, Int) {
+        do {
+            let request = Movie.fetchRequest() as NSFetchRequest<Movie>
+            let pred = NSPredicate(format: "title CONTAINS[c] %@", searchText)
+            request.predicate = pred
+            let totalMoviesCount = try mainContext.count(for: request)
+            let totalPagesCount = Int(totalMoviesCount / size) + (totalMoviesCount % size == 0 ? 0 : 1)
+            
+            request.fetchLimit = size
+            request.fetchOffset = (page - 1) * size
+            
+            let movies = try mainContext.fetch(request)
+            let movieDTOs = movies.map({ MovieDTO(dataObject: $0) })
+            
+            return (movieDTOs, page, totalPagesCount)
+        } catch {
+            print("Error searching movies from CoreData: \(error.localizedDescription)")
+            return ([], 1, 1)
         }
     }
     

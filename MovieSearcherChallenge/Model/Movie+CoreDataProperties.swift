@@ -21,7 +21,7 @@ extension Movie {
     @NSManaged public var overview: String?
     @NSManaged public var posterPath: String?
     @NSManaged public var releaseDate: String?
-    @NSManaged public var title: String?
+    @NSManaged public var title: String
     @NSManaged public var image: Data?
 
 }
