@@ -37,6 +37,15 @@ To run this project locally, follow these steps:
 
 <br>
 
+## 🎉  Bonus points:
+
+- [x] Implement pagination in the search results table view.
+- [x] Allow users to save movies to a favorites list.
+- [ ] Add unit tests and UI tests for your code.
+- [x] Offline mode: the app can persist the data previously fetched and see them when the app is opened in offline mode. 
+
+<br>
+
 ## 📱 ScreenShots
 <img width="270" alt="image" src="https://github.com/YaoKevinn/MovieSearcherChallenge/assets/51725053/437b1079-a2ac-43c3-9422-2e6f1037f4a6">
 <img width="270" alt="image" src="https://github.com/YaoKevinn/MovieSearcherChallenge/assets/51725053/6ad95283-f35e-4a3f-b506-e211eca78717">
