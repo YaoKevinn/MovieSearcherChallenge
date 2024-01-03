@@ -2,7 +2,7 @@
 //  Movie+CoreDataProperties.swift
 //  MovieSearcherChallenge
 //
-//  Created by YaoKevinn on 02/01/2024.
+//  Created by YaoKevinn on 03/01/2024.
 //
 //
 
@@ -16,13 +16,16 @@ extension Movie {
         return NSFetchRequest<Movie>(entityName: "Movie")
     }
 
-    @NSManaged public var id: String?
+    @NSManaged public var id: Int32
     @NSManaged public var isFavorite: Bool
     @NSManaged public var overview: String?
     @NSManaged public var posterPath: String?
     @NSManaged public var releaseDate: String?
     @NSManaged public var title: String?
+    @NSManaged public var image: Data?
 
 }
 
-extension Movie : Identifiable {}
+extension Movie : Identifiable {
+
+}

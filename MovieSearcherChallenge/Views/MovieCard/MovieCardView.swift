@@ -10,14 +10,14 @@ import SDWebImageSwiftUI
 
 struct MovieCardView: View {
     
-    let movie: Movie
+    let movie: MovieDTO
     @State private var isFavorite: Bool = false
     var onTapCard: (() -> Void)? = nil
     
     var body: some View {
         HStack(spacing: 15) {
-            if let imageUrl = movie.posterPath {
-                WebImage(url: URL(string: imageUrl))
+            if let data = movie.image, let uiImage = UIImage(data: data) {
+               Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 182, height: 273)
@@ -57,19 +57,19 @@ struct MovieCardView: View {
             }
             
             VStack(spacing: 10) {
-                Text(movie.title ?? "-")
+                Text(movie.title)
                     .font(.headline)
                     .fontWeight(.heavy)
                     .lineSpacing(8)
                     .foregroundColor(Color.theme.primaryWhite)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text(movie.releaseDate ?? "-")
+                Text(movie.releaseDate)
                     .font(.callout)
                     .foregroundColor(Color.theme.primaryWhite)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text(movie.overview ?? "-")
+                Text(movie.overview)
                     .font(.caption)
                     .lineLimit(5)
                     .lineSpacing(4)
@@ -90,7 +90,7 @@ struct MovieCardView: View {
 
 struct MovieCardView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieCardView(movie: .init(context: .init(concurrencyType: .mainQueueConcurrencyType)))
+        MovieCardView(movie: MovieDTO.dummy())
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

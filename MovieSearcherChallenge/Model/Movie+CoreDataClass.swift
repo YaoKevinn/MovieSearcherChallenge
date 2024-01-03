@@ -2,7 +2,7 @@
 //  Movie+CoreDataClass.swift
 //  MovieSearcherChallenge
 //
-//  Created by YaoKevinn on 02/01/2024.
+//  Created by YaoKevinn on 03/01/2024.
 //
 //
 

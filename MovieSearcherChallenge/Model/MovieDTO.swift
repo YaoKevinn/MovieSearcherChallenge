@@ -13,6 +13,7 @@ struct MovieDTO: Codable {
     var posterPath: String? = nil
     let releaseDate: String
     let title: String
+    var image: Data? = nil
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -20,6 +21,41 @@ struct MovieDTO: Codable {
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case title
+    }
+    
+    init(id: Int, overview: String, posterPath: String? = nil, releaseDate: String, title: String, image: Data? = nil) {
+        self.id = id
+        self.overview = overview
+        self.posterPath = posterPath
+        self.releaseDate = releaseDate
+        self.title = title
+        self.image = image
+    }
+    
+    init(dataObject: Movie) {
+        self.id = Int(dataObject.id)
+        self.overview = dataObject.overview ?? "-"
+        self.posterPath = dataObject.posterPath
+        self.releaseDate = dataObject.releaseDate ?? "-"
+        self.title = dataObject.title ?? "-"
+        self.image = dataObject.image
+    }
+    
+    func getImageUrl() -> String? {
+        if let posterPath = self.posterPath {
+            return "https://image.tmdb.org/t/p/w500\(posterPath)"
+        }
+        return nil
+    }
+    
+    static func dummy() -> MovieDTO {
+        MovieDTO(
+            id: 10091722,
+            overview: "A police squad on a mission… A football match… Tension rises on both sides… The shooting starts and the team must face the pressure. When rivalry and betrayal slide onto the field, the team spirit and trust fly to bits.",
+            posterPath: "/t57HRefWpqIztScbQAVRdHm7v9V.jpg",
+            releaseDate: "2020-09-05",
+            title: "Flash"
+        )
     }
 }
 

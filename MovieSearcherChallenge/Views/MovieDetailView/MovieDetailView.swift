@@ -10,15 +10,15 @@ import SDWebImageSwiftUI
 
 struct MovieDetailView: View {
     
-    let movie: Movie
+    let movie: MovieDTO
     
     var body: some View {
         ZStack {
             Color.theme.primaryBlack.ignoresSafeArea()
             
             VStack {
-                if let imageUrl = movie.posterPath {
-                    WebImage(url: URL(string: imageUrl))
+                if let data = movie.image, let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFill()
                         .frame(width: UIScreen.width, height: UIScreen.height * 0.7)
@@ -40,18 +40,18 @@ struct MovieDetailView: View {
             .edgesIgnoringSafeArea(.top)
             
             VStack(spacing: 10) {
-                Text(movie.title ?? "-")
+                Text(movie.title)
                     .font(.largeTitle)
                     .fontWeight(.heavy)
                     .lineSpacing(8)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Text(movie.releaseDate ?? "-")
+                Text(movie.releaseDate)
                     .font(.callout)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 ScrollView {
-                    Text(movie.overview ?? "-")
+                    Text(movie.overview)
                         .font(.body)
                         .lineSpacing(4)
                         .foregroundColor(Color.theme.secondaryGray)
@@ -90,6 +90,6 @@ struct MovieDetailView: View {
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView(movie: Movie(context: .init(concurrencyType: .mainQueueConcurrencyType)))
+        MovieDetailView(movie: MovieDTO.dummy())
     }
 }
