@@ -96,14 +96,13 @@ class OfflineHomeViewController: UIViewController {
                         message: "Please try another movie title"
                     )
                 }
-                print("🔥 PASA POR ACA Coredata: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
+                print("🔥 Coredata: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
             },
             errorHandler: { error in
                 if error == .Connectivity {
                     self.scrollToTop()
                 }
                 self.showAlert(title: "Oops! There was an error", message: "Please contact us")
-                print("🔥 PASA POR ACA Coredata: \(error)")
             })
     }
     

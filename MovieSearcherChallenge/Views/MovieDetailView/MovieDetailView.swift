@@ -78,7 +78,7 @@ struct MovieDetailView: View {
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 28)
-                            .fill(Color.theme.accent)
+                            .fill(isFavorite ? Color.theme.primaryWhite : Color.theme.accent)
                     )
                 }
 

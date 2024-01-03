@@ -42,17 +42,18 @@ class CoreDataManager {
         }
     }
     
-    func getMovies() {
-        do {
-            let fetchRequest = Movie.fetchRequest()
-            let data = try mainContext.fetch(fetchRequest)
-            print("-------DATA FOR MOVIES-------")
-            print("Total count: \(data.count)")
-            print(data.map({ $0.title }))
-        } catch {
-            print("Error getting movies from CoreData: \(error.localizedDescription)")
-        }
-    }
+    // For testing use
+//    func getMovies() {
+//        do {
+//            let fetchRequest = Movie.fetchRequest()
+//            let data = try mainContext.fetch(fetchRequest)
+//            print("-------DATA FOR MOVIES-------")
+//            print("Total count: \(data.count)")
+//            print(data.map({ $0.title }))
+//        } catch {
+//            print("Error getting movies from CoreData: \(error.localizedDescription)")
+//        }
+//    }
     
     func getAllFavorites() -> [MovieDTO] {
         if let favIds = UserDefaults.standard.array(forKey: "favoritesMovieIds") as? [Int] {

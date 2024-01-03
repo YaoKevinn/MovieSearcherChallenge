@@ -60,7 +60,6 @@ class RemoteMovieRepository: MovieRepositoryProtocol {
                         case .success(let moviesWithImages):
                             // Save fetched data to core data
                             self.coreDataManager.insertMoviesIfNeeded(movieDTOs: moviesWithImages)
-                            self.coreDataManager.getMovies()
                             completion(moviesWithImages, res.page, res.totalPages)
                         case .failure(let error):
                             print("Error downloading images: \(error)")

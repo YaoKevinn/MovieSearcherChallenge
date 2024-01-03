@@ -29,21 +29,6 @@ struct HeaderView: View {
                 
                 Spacer()
                 
-                
-                Button {
-                    CoreDataManager().getMovies()
-                } label: {
-                    Text("Get")
-                }
-                .padding(.trailing, 8)
-                
-                Button {
-                    CoreDataManager().deleteAllMovies()
-                } label: {
-                    Text("Reset")
-                }
-                .padding(.trailing, 8)
-                
                 Button {
                     onTapFavorite?()
                 } label: {

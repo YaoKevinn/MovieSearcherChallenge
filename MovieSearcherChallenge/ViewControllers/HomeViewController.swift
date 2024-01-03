@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
                     )
                 }
                 
-                print("🔥 PASA POR ACA: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
+                print("🔥 Page \(currentPage) with \(movies.count) movies and a total \(totalPage) pages")
             },
             errorHandler: { error in
                 if error == .Connectivity {
@@ -124,7 +124,7 @@ class HomeViewController: UIViewController {
                     okActionTitle: "Ok"
                 )
                 
-                print("🔥 PASA POR ACA: \(error)")
+                print("Error: \(error)")
             })
     }
     
