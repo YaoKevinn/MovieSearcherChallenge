@@ -66,7 +66,7 @@ class RemoteMovieRepository: MovieRepositoryProtocol {
                         }
                     }
                 } catch(let error) {
-                    print("ERROR: \(error)")
+                    print("Error: \(error)")
                     errorHandler(NetworkError.DecodingError)
                 }
             }

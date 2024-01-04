@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
                     )
                 }
                 
-                print("🔥 Page \(currentPage) with \(movies.count) movies and a total \(totalPage) pages")
+                print("Page \(currentPage) with \(movies.count) movies and a total \(totalPage) pages")
             },
             errorHandler: { error in
                 if error == .Connectivity {

@@ -96,7 +96,7 @@ class OfflineHomeViewController: UIViewController {
                         message: "Please try another movie title"
                     )
                 }
-                print("🔥 Coredata: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
+                print("Coredata: Page \(currentPage) with \(movies.count) movies and a total \(totalPage)")
             },
             errorHandler: { error in
                 if error == .Connectivity {
