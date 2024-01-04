@@ -48,6 +48,7 @@ struct HeaderView: View {
                             .foregroundColor(Color.theme.primaryWhite.opacity(0.2))
                     }
                     .font(.headline)
+                    .submitLabel(.search)
                     .onTapGesture {
                         searched = false
                     }
