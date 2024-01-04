@@ -42,7 +42,11 @@ To run this project locally, follow these steps:
 - [x] Implement pagination in the search results table view.
 - [x] Allow users to save movies to a favorites list.
 - [ ] Add unit tests and UI tests for your code.
-- [x] Offline mode: the app can persist the data previously fetched and see them when the app is opened in offline mode. 
+- [x] Offline mode: the app can persist the data previously fetched and see them when the app is opened in offline mode.
+
+## Offline Mode
+
+To switch from online to offline mode on a simulator of iOS deveices, you can simply turn off the Wifi connection on the Mac and make another movie search in the app. A alert will popup to inform that there is a problem with the internet connection and offer to switch to offline mode. Or you can just re run the app with no internet connection.
 
 <br>
 
